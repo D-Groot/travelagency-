@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,17 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Destinations", path: "/destinations" },
+    { name: "Services", path: "/services" },
+    { name: "Blog", path: "/blog" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Testimonials", path: "/testimonials" },
+    { name: "FAQ", path: "/faq" },
+    { name: "Contact", path: "/contact" }
+  ];
+
   return (
     <nav
       className={cn(
@@ -34,29 +46,29 @@ const Navbar: React.FC = () => {
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <span className={cn(
               "font-bold text-3xl transition-colors",
               isScrolled ? "text-india-saffron" : "text-white"
             )}>
               Desire<span className="text-india-green">4</span>Travels
             </span>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex space-x-8">
-          {["Home", "Destinations", "Experiences", "About Us", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+        <div className="hidden lg:flex space-x-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
               className={cn(
                 "font-medium transition-colors hover:text-india-saffron",
                 isScrolled ? "text-gray-700" : "text-white"
               )}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
 
@@ -69,7 +81,7 @@ const Navbar: React.FC = () => {
             <span>EN</span>
             <ChevronDown className="h-4 w-4 ml-1" />
           </div>
-          <button className="btn-primary">Book Now</button>
+          <Link to="/booking" className="btn-primary">Book Now</Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -93,19 +105,19 @@ const Navbar: React.FC = () => {
         )}
       >
         <div className="flex flex-col space-y-6">
-          {["Home", "Destinations", "Experiences", "About Us", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
               className="text-gray-800 font-medium text-lg"
               onClick={() => setIsMenuOpen(false)}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
         <div className="mt-8">
-          <button className="btn-primary w-full">Book Now</button>
+          <Link to="/booking" className="btn-primary w-full" onClick={() => setIsMenuOpen(false)}>Book Now</Link>
         </div>
         <div className="flex items-center mt-6 text-gray-700 cursor-pointer">
           <Globe className="h-4 w-4 mr-2" />
