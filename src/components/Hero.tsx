@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface HeroImage {
   url: string;
@@ -10,6 +10,7 @@ interface HeroImage {
 
 const Hero: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate();
 
   const heroImages: HeroImage[] = [
     {
@@ -67,11 +68,17 @@ const Hero: React.FC = () => {
           <h1 className="mb-4">{heroImages[currentImageIndex].title}</h1>
           <p className="text-xl mb-8">{heroImages[currentImageIndex].subtitle}</p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="btn-primary flex items-center justify-center gap-2">
+            <button 
+              className="btn-primary flex items-center justify-center gap-2"
+              onClick={() => navigate('/destinations')}
+            >
               Explore Destinations
               <ChevronRight className="h-4 w-4" />
             </button>
-            <button className="border-2 border-white hover:border-india-saffron text-white px-6 py-3 rounded-md font-medium hover:text-india-saffron transition-all">
+            <button 
+              className="border-2 border-white hover:border-india-saffron text-white px-6 py-3 rounded-md font-medium hover:text-india-saffron transition-all"
+              onClick={() => navigate('/booking')}
+            >
               Plan Your Trip
             </button>
           </div>

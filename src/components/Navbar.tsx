@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
@@ -41,16 +40,13 @@ const Navbar: React.FC = () => {
         "fixed w-full z-50 transition-all duration-300",
         isScrolled
           ? "bg-white shadow-md py-2"
-          : "bg-transparent py-4"
+          : "bg-black/50 backdrop-blur-sm py-4"
       )}
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <span className={cn(
-              "font-bold text-3xl transition-colors",
-              isScrolled ? "text-india-saffron" : "text-white"
-            )}>
+            <span className="font-bold text-3xl text-india-saffron">
               Desire<span className="text-india-green">4</span>Travels
             </span>
           </Link>
@@ -64,7 +60,7 @@ const Navbar: React.FC = () => {
               to={item.path}
               className={cn(
                 "font-medium transition-colors hover:text-india-saffron",
-                isScrolled ? "text-gray-700" : "text-white"
+                "text-white"
               )}
             >
               {item.name}

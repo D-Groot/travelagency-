@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import FeaturedDestinations from "@/components/FeaturedDestinations";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
+import CustomizeTripForm from "@/components/CustomizeTripForm";
 import CallToAction from "@/components/CallToAction";
 import Footer from "@/components/Footer";
 
@@ -15,6 +16,7 @@ const Index: React.FC = () => {
       <Hero />
       <FeaturedDestinations />
       <WhyChooseUs />
+      <CustomizeTripForm />
       <Testimonials />
       <CallToAction />
       <Footer />
