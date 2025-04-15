@@ -1,8 +1,8 @@
-
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Star, Clock, MapPin, Users, CalendarDays } from "lucide-react";
+import { Star, Clock, MapPin, Users } from "lucide-react";
+import CustomizeTripForm from "@/components/CustomizeTripForm";
 
 interface Destination {
   id: number;
@@ -239,28 +239,7 @@ const Destinations: React.FC = () => {
         </div>
       </div>
       
-      <section className="container py-16">
-        <div className="bg-gradient-to-r from-india-saffron to-india-earth rounded-xl overflow-hidden">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2 p-8 md:p-12 text-white">
-              <h2 className="mb-4">Custom Travel Package</h2>
-              <p className="mb-6">
-                Can't find what you're looking for? Let us design a personalized travel experience just for you, tailored to your preferences and interests.
-              </p>
-              <button className="bg-white text-india-saffron hover:bg-white/90 px-6 py-3 rounded-md font-medium transition-all shadow-md hover:shadow-lg">
-                Request Custom Package
-              </button>
-            </div>
-            <div className="md:w-1/2 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1623867321012-027dbd0e1e18?auto=format&fit=crop&q=80&w=2070" 
-                alt="Custom travel experience" 
-                className="w-full md:h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <CustomizeTripForm />
       
       <Footer />
     </div>

@@ -1,11 +1,18 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Globe, ChevronDown } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,10 +25,6 @@ const Navbar: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -44,13 +47,14 @@ const Navbar: React.FC = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center">
-            <span className="font-bold text-3xl text-india-saffron">
-              Desire<span className="text-india-green">4</span>Travels
-            </span>
-          </Link>
-        </div>
+        <Link to="/" className="flex items-center">
+          <span className={cn(
+            "font-bold text-4xl transition-colors duration-300",
+            isScrolled ? "text-india-saffron" : "text-india-saffron"
+          )}>
+            Desire<span className="text-india-green">4</span>Travels
+          </span>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex space-x-6">
@@ -60,7 +64,7 @@ const Navbar: React.FC = () => {
               to={item.path}
               className={cn(
                 "font-medium transition-colors hover:text-india-saffron",
-                "text-white"
+                isScrolled ? "text-gray-700" : "text-white"
               )}
             >
               {item.name}
@@ -68,57 +72,46 @@ const Navbar: React.FC = () => {
           ))}
         </div>
 
-        <div className="hidden lg:flex items-center space-x-4">
-          <div className={cn(
-            "flex items-center cursor-pointer",
-            isScrolled ? "text-gray-700" : "text-white"
-          )}>
-            <Globe className="h-4 w-4 mr-1" />
-            <span>EN</span>
-            <ChevronDown className="h-4 w-4 ml-1" />
-          </div>
-          <Link to="/booking" className="btn-primary">Book Now</Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className={cn(
-            "lg:hidden transition-colors",
-            isScrolled ? "text-gray-700" : "text-white"
-          )}
-        >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          "lg:hidden fixed inset-0 bg-white z-40 flex flex-col pt-20 px-6",
-          isMenuOpen ? "translate-x-0" : "translate-x-full",
-          "transition-transform duration-300 ease-in-out"
-        )}
-      >
-        <div className="flex flex-col space-y-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className="text-gray-800 font-medium text-lg"
-              onClick={() => setIsMenuOpen(false)}
+        {/* Mobile Navigation with Sheet */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <button
+              className={cn(
+                "lg:hidden transition-colors p-2 rounded-lg",
+                isScrolled ? "text-gray-700" : "text-white"
+              )}
             >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-        <div className="mt-8">
-          <Link to="/booking" className="btn-primary w-full" onClick={() => setIsMenuOpen(false)}>Book Now</Link>
-        </div>
-        <div className="flex items-center mt-6 text-gray-700 cursor-pointer">
-          <Globe className="h-4 w-4 mr-2" />
-          <span>English</span>
-          <ChevronDown className="h-4 w-4 ml-2" />
+              <Menu className="h-6 w-6" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetHeader>
+              <SheetTitle className="text-left text-xl font-bold text-india-saffron">
+                Navigation
+              </SheetTitle>
+            </SheetHeader>
+            <div className="flex flex-col gap-4 mt-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="text-gray-700 hover:text-india-saffron transition-colors py-2 px-4 rounded-lg hover:bg-gray-100"
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link 
+                to="/booking" 
+                className="bg-india-saffron text-white py-2 px-4 rounded-lg hover:bg-india-saffron/90 text-center mt-4"
+              >
+                Book Now
+              </Link>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <div className="hidden lg:flex items-center space-x-4">
+          <Link to="/booking" className="btn-primary">Book Now</Link>
         </div>
       </div>
     </nav>

@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Destination {
   id: number;
@@ -12,6 +12,8 @@ interface Destination {
 }
 
 const FeaturedDestinations: React.FC = () => {
+  const navigate = useNavigate();
+  
   const destinations: Destination[] = [
     {
       id: 1,
@@ -51,7 +53,11 @@ const FeaturedDestinations: React.FC = () => {
             <p className="text-india-saffron font-medium mb-2">EXPLORE INDIA</p>
             <h2 className="text-gray-900">Popular Destinations</h2>
           </div>
-          <Button variant="ghost" className="hidden md:flex items-center mt-4 md:mt-0 text-india-saffron hover:text-india-saffron/90 hover:bg-india-saffron/10">
+          <Button 
+            variant="ghost" 
+            className="hidden md:flex items-center mt-4 md:mt-0 text-india-saffron hover:text-india-saffron/90 hover:bg-india-saffron/10"
+            onClick={() => navigate('/destinations')}
+          >
             View All Destinations
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -84,7 +90,11 @@ const FeaturedDestinations: React.FC = () => {
         </div>
         
         <div className="mt-8 text-center md:hidden">
-          <Button variant="ghost" className="flex items-center mx-auto text-india-saffron hover:text-india-saffron/90 hover:bg-india-saffron/10">
+          <Button 
+            variant="ghost" 
+            className="flex items-center mx-auto text-india-saffron hover:text-india-saffron/90 hover:bg-india-saffron/10"
+            onClick={() => navigate('/destinations')}
+          >
             View All Destinations
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
