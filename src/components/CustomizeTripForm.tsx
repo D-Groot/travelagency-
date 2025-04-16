@@ -5,8 +5,8 @@ import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +26,15 @@ type CustomizeTripFormData = z.infer<typeof formSchema>;
 const CustomizeTripForm: React.FC = () => {
   const form = useForm<CustomizeTripFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      destination: "",
+      travelDates: "",
+      groupSize: "",
+      budget: "",
+      preferences: "",
+    }
   });
 
   const onSubmit = (data: CustomizeTripFormData) => {
@@ -79,17 +88,20 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Preferred Destination</FormLabel>
-                    <Select 
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      <option value="">Select a destination</option>
-                      <option value="rajasthan">Rajasthan</option>
-                      <option value="kerala">Kerala</option>
-                      <option value="himachal">Himachal Pradesh</option>
-                      <option value="goa">Goa</option>
-                      <option value="ladakh">Ladakh</option>
-                      <option value="andaman">Andaman Islands</option>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a destination" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="rajasthan">Rajasthan</SelectItem>
+                        <SelectItem value="kerala">Kerala</SelectItem>
+                        <SelectItem value="himachal">Himachal Pradesh</SelectItem>
+                        <SelectItem value="goa">Goa</SelectItem>
+                        <SelectItem value="ladakh">Ladakh</SelectItem>
+                        <SelectItem value="andaman">Andaman Islands</SelectItem>
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                   </FormItem>
@@ -119,15 +131,18 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Group Size</FormLabel>
-                    <Select 
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      <option value="">Select group size</option>
-                      <option value="1-2">1-2 people</option>
-                      <option value="3-5">3-5 people</option>
-                      <option value="6-10">6-10 people</option>
-                      <option value="10+">More than 10</option>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select group size" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="1-2">1-2 people</SelectItem>
+                        <SelectItem value="3-5">3-5 people</SelectItem>
+                        <SelectItem value="6-10">6-10 people</SelectItem>
+                        <SelectItem value="10+">More than 10</SelectItem>
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                   </FormItem>
@@ -140,14 +155,17 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Budget Range (₹)</FormLabel>
-                    <Select 
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      <option value="">Select budget range</option>
-                      <option value="budget">25,000 - 50,000</option>
-                      <option value="mid">50,000 - 1,00,000</option>
-                      <option value="luxury">1,00,000+</option>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select budget range" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="budget">25,000 - 50,000</SelectItem>
+                        <SelectItem value="mid">50,000 - 1,00,000</SelectItem>
+                        <SelectItem value="luxury">1,00,000+</SelectItem>
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                   </FormItem>

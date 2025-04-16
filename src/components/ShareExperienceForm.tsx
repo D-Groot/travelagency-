@@ -5,17 +5,23 @@ import { Upload, Image as ImageIcon } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface ShareExperienceFormData {
-  name: string;
-  tripLocation: string;
-  experience: string;
-  photos: FileList | null;
-}
+const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  tripLocation: z.string().min(2, "Location must be at least 2 characters"),
+  experience: z.string().min(10, "Please share at least 10 characters about your experience"),
+});
+
+type ShareExperienceFormData = z.infer<typeof formSchema>;
 
 const ShareExperienceForm: React.FC = () => {
-  const form = useForm<ShareExperienceFormData>();
+  const form = useForm<ShareExperienceFormData>({
+    resolver: zodResolver(formSchema),
+  });
   const [previews, setPreviews] = React.useState<string[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,9 +121,9 @@ const ShareExperienceForm: React.FC = () => {
           )}
         </div>
 
-        <button type="submit" className="w-full btn-primary">
+        <Button type="submit" className="w-full bg-india-saffron hover:bg-india-saffron/90">
           Submit Your Experience
-        </button>
+        </Button>
       </form>
     </Form>
   );
