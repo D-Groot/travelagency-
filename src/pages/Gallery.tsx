@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -238,18 +237,11 @@ const Gallery: React.FC = () => {
           <div className="text-center mb-12">
             <h2>Share Your Experience</h2>
             <p className="text-gray-600 mt-4 max-w-3xl mx-auto">
-              Have you traveled with us? We'd love to see your photos and hear about your experiences. Share them on social media using #Desire4Travels or submit them directly to us.
+              Have you traveled with us? We'd love to see your photos and hear about your experiences. Share them with our community!
             </p>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <button className="bg-india-saffron text-white hover:bg-india-saffron/90 px-6 py-3 rounded-md font-medium transition-all shadow-md hover:shadow-lg">
-              Upload Your Photos
-            </button>
-            <button className="bg-white text-india-saffron border border-india-saffron hover:bg-india-saffron/10 px-6 py-3 rounded-md font-medium transition-all">
-              Submit Your Story
-            </button>
-          </div>
+          <ShareExperienceForm />
         </div>
       </section>
       

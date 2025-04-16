@@ -3,27 +3,35 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface CustomizeTripFormData {
-  name: string;
-  email: string;
-  destination: string;
-  travelDates: string;
-  groupSize: string;
-  budget: string;
-  preferences: string;
-}
+const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email"),
+  destination: z.string().min(1, "Please select a destination"),
+  travelDates: z.string().min(1, "Please select travel dates"),
+  groupSize: z.string().min(1, "Please select group size"),
+  budget: z.string().min(1, "Please select budget range"),
+  preferences: z.string().optional(),
+});
+
+type CustomizeTripFormData = z.infer<typeof formSchema>;
 
 const CustomizeTripForm: React.FC = () => {
-  const form = useForm<CustomizeTripFormData>();
+  const form = useForm<CustomizeTripFormData>({
+    resolver: zodResolver(formSchema),
+  });
 
   const onSubmit = (data: CustomizeTripFormData) => {
     console.log(data);
     toast.success("Thank you! We'll get back to you soon with a customized itinerary.");
+    form.reset();
   };
 
   return (
@@ -46,6 +54,7 @@ const CustomizeTripForm: React.FC = () => {
                     <FormControl>
                       <Input placeholder="Your full name" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -59,6 +68,7 @@ const CustomizeTripForm: React.FC = () => {
                     <FormControl>
                       <Input type="email" placeholder="Your email address" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -69,13 +79,19 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Preferred Destination</FormLabel>
-                    <Select>
+                    <Select 
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
                       <option value="">Select a destination</option>
                       <option value="rajasthan">Rajasthan</option>
                       <option value="kerala">Kerala</option>
                       <option value="himachal">Himachal Pradesh</option>
                       <option value="goa">Goa</option>
+                      <option value="ladakh">Ladakh</option>
+                      <option value="andaman">Andaman Islands</option>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -88,10 +104,11 @@ const CustomizeTripForm: React.FC = () => {
                     <FormLabel>Travel Dates</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input type="date" {...field} />
+                        <Input type="date" {...field} min={new Date().toISOString().split('T')[0]} />
                         <CalendarIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
                       </div>
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -102,13 +119,17 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Group Size</FormLabel>
-                    <Select {...field}>
+                    <Select 
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
                       <option value="">Select group size</option>
                       <option value="1-2">1-2 people</option>
                       <option value="3-5">3-5 people</option>
                       <option value="6-10">6-10 people</option>
                       <option value="10+">More than 10</option>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -119,12 +140,16 @@ const CustomizeTripForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Budget Range (₹)</FormLabel>
-                    <Select {...field}>
+                    <Select 
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
                       <option value="">Select budget range</option>
                       <option value="budget">25,000 - 50,000</option>
                       <option value="mid">50,000 - 1,00,000</option>
                       <option value="luxury">1,00,000+</option>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -137,10 +162,9 @@ const CustomizeTripForm: React.FC = () => {
                 <FormItem>
                   <FormLabel>Special Preferences</FormLabel>
                   <FormControl>
-                    <textarea 
-                      className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-india-saffron"
+                    <Textarea 
                       placeholder="Tell us about your interests, preferences, or any special requirements..."
-                      rows={4}
+                      className="min-h-[120px]"
                       {...field}
                     />
                   </FormControl>
