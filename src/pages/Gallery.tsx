@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { X } from "lucide-react";
+import ShareExperienceForm from "@/components/ShareExperienceForm";
 
 interface GalleryItem {
   id: number;
